@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { first, of, tap } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {first, of, tap} from 'rxjs';
 
-import { Course } from '../model/course';
-import { CoursePage } from '../model/course-page';
+import {Course} from '../model/course';
+import {CoursePage} from '../model/course-page';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +13,15 @@ export class CoursesService {
 
   private cache: Course[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   list(page = 0, pageSize = 10) {
-    return this.http.get<CoursePage>(this.API, { params: { page, pageSize } }).pipe(
-      first(),
-      // map(data => data.courses),
-      tap(data => (this.cache = data.courses))
-    );
+    return this.http.get<CoursePage>(this.API, {params: {page, pageSize}})
+      .pipe(
+        first(),
+        tap(data => (this.cache = data.courses))
+      );
   }
 
   loadById(id: string) {
